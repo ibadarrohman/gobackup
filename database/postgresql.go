@@ -110,14 +110,14 @@ func (db *PostgreSQL) build() string {
 		dumpArgs = append(dumpArgs, db.args)
 	}
 
-	dumpArgs = append(dumpArgs, "-f", db._dumpFilePath)
-
 	var dumpCommand string
 	if db.database == ":all" {
-		dumpCommand = "pg_dumpall"
+		dumpCommand = "pg_dumpall "
 	} else {
-		dumpCommand = "pg_dump"
+		dumpCommand = "pg_dump "
+		dumpArgs = append(dumpArgs, db.database)
 	}
+	dumpArgs = append(dumpArgs, "-f", db._dumpFilePath)
 	return dumpCommand + strings.Join(dumpArgs, " ")
 }
 
